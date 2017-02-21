@@ -1,4 +1,4 @@
-@foreach ($scripts as $script)
+@foreach ($subscripts as $script)
   @if (strpos($script,"//") !== false)
     <script src="{{$script}}" ></script>
   @else

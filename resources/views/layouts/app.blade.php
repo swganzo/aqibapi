@@ -8,23 +8,19 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>{{ $title }}</title>
 
   <!-- Styles -->
   @yield('styles')
-  @section('styles')
-    @if (!empty($styles))
-      @include('modules.styles', ['styles' => $styles])
-    @endif
-  @endsection
+  @if (!empty($styles))
+    @include('modules.styles', ['styles' => $styles])
+  @endif
 
   {{-- additional header scripts --}}
   @yield('scriptsheader')
-  @section('scriptsheader')
-    @if (!empty($scripts) || !empty($scripts['header']))
-      @include('modules.scripts', ['scripts' => $scripts['header']])
-    @endif
-  @endsection
+  @if (!empty($scripts) || !empty($scripts['header']))
+    @include('modules.scripts', ['subscripts' => $scripts['header']])
+  @endif
 
   <!-- Scripts -->
   <script>
@@ -56,7 +52,11 @@
           <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-              &nbsp;
+              @if (!empty($navigation))
+                @foreach ($navigation as $item)
+                  @include('modules.navigation.main.item', ['item' => $item])
+                @endforeach
+              @endif
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -98,7 +98,7 @@
   @yield('scriptsfooter')
   {{-- additional footer scripts --}}
   @if (!empty($scripts) || !empty($scripts['footer']))
-    @include('modules.scripts', ['scripts' => $scripts['footer']])
+    @include('modules.scripts', ['subscripts' => $scripts['footer']])
   @endif
 </body>
 </html>

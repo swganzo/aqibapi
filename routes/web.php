@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group(['middleware' => 'auth'], function(){
+  // Sensor routes
+  Route::get('sensors','SensorController@index');
+  Route::group(['prefix' => 'sensor'], function () {
+    Route::any('{action?}/{id?}', 'SensorController@main');
+  });
+});

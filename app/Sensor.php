@@ -1,12 +1,12 @@
 <?php
-
 namespace App;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Sensor extends Model {
-
-	protected $table = 'sensors';
-	public $timestamps = true;
+  use Searchable;
+  protected $table = 'sensors';
+  public $timestamps = true;
 
 }

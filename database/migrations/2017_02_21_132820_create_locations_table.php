@@ -12,8 +12,8 @@ class CreateLocationsTable extends Migration {
 			$table->timestamps();
 			$table->integer('user_id')->unsigned();
 			$table->integer('sensor_id')->unsigned();
-			$table->string('lat')->nullable();
-			$table->string('lon')->nullable();
+			$table->string('lat');
+			$table->string('lon');
 			$table->string('ip')->nullable();
 		});
 	}

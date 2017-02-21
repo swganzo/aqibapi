@@ -190,6 +190,12 @@ return [
         // ReCaptcha
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
+        // View
+        App\Providers\ComposerServiceProvider::class,
+
+        // Scout
+        Laravel\Scout\ScoutServiceProvider::class,
+
     ],
 
     /*
@@ -246,9 +252,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 
-        //Recaptcha
+        // Recaptcha
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
-
     ],
 
 ];

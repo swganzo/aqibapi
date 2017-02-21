@@ -19,6 +19,5 @@ Route::get('/', function()
 
 Route::resource('sensor', 'SensorController');
 Route::resource('reading', 'ReadingController');
-Route::resource('api', 'ApiController');
 Route::resource('location', 'LocationController');
 Route::resource('userinfo', 'UserInfoController');

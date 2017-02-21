@@ -29,4 +29,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sensors()
+    {
+      return $this->hasMany('\App\Sensor');
+    }
 }
