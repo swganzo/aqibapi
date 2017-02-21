@@ -12,8 +12,8 @@ class CreateSensorsTable extends Migration {
 			$table->timestamps();
 			$table->string('title')->nullable();
 			$table->string('mac')->nullable();
-			$table->string('api_id')->unsigned();
-			$table->string('user_id')->unsigned();
+			$table->integer('api_id')->unsigned();
+			$table->integer('user_id')->unsigned();
 		});
 	}
 
