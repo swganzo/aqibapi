@@ -35,4 +35,24 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('APP_URL').'/user/login/github',
+    ],
+    'facebook' => [
+        'client_id' => env('FB_APP_ID'),
+        'client_secret' => env('FB_APP_SECRET'),
+        'redirect' => env('APP_URL').'/user/login/facebook',
+    ],
+    'twitter' => [
+        'client_id' => env('TW_APP_KEY'),
+        'client_secret' => env('TW_APP_SECRET'),
+        'redirect' => env('APP_URL').'/user/login/twitter',
+    ],
+    'google' => [
+        'client_id' => env('GP_APP_KEY'),
+        'client_secret' => env('GP_APP_SECRET'),
+        'redirect' => env('APP_URL').'/user/login/google',
+    ],
 ];

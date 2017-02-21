@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // FIX FOR INNO DB thingie
         Schema::defaultStringLength(191);
     }
 
