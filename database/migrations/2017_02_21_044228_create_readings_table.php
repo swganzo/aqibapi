@@ -21,6 +21,8 @@ class CreateReadingsTable extends Migration {
 			$table->string('o3')->nullable();
 			$table->string('no2')->nullable();
 			$table->string('co')->nullable();
+      $table->string('humidity')->nullable();
+			$table->string('temperature')->nullable();
 			$table->string('nh3')->nullable();
 			$table->text('other')->nullable();
 		});
