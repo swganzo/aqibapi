@@ -187,6 +187,9 @@ return [
         // HTML
         Collective\Html\HtmlServiceProvider::class,
 
+        // ReCaptcha
+        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+
     ],
 
     /*
@@ -242,6 +245,9 @@ return [
         // Html
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        //Recaptcha
+        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
 
     ],
 
