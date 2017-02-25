@@ -8,7 +8,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ $title }}</title>
+  <title> {{$title}} | {{ config('app.name', 'AQIB API') }} </title>
 
   <!-- Styles -->
   @yield('styles')

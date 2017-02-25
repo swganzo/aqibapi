@@ -1,83 +1,120 @@
-<?php 
-
+<?php
 namespace App\Http\Controllers;
+
+use \Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+
+use \App\Sensor;
 
 class SensorController extends Controller {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
-  public function index()
-  {
-    
-  }
+  public function record($action=null,$id=null)
+    {
+        // If Updating
+        if(\Request::has('id')){
+          $id = \Request::get('id');
+        }
+        // Copy texts
+        switch ($action) {
+          case 'store':
+            $message_suffix = 'Stored';
+            break;
+          case 'edit':
+            $message_suffix = 'Updated';
+            break;
+          case 'remove':
+            $message_suffix = 'Removed';
+            break;
+        }
+        $validation_rule = [
+          'title'=>'required|max:255|min:3'
+        ];
+        $request = \Request::all();
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return Response
-   */
-  public function create()
-  {
-    
-  }
+        // Validate
+        $validator = Validator::make($request, $validation_rule);
+        if ($validator->fails()) {
+          return [
+            'status'=>false,
+            'errors'=>$validator->errors()
+          ];
+        }
+        if(!empty($id)){
+          $item = Sensor::find($id);
+          if($item->access != 'write'){
+            return abort('403');
+          }
+        } else {
+          $item = new Sensor;
+        }
+        // Try to save
+        try {
+          $item->title = $request['title'];
+          $item->user_id = $this->user->id;
+          $item->api_key = md5(uniqid(rand(), true));
+          $item->save();
+          \Session::flash('message', 'Sensor '.$message_suffix);
+          return [
+            'status'=>true,
+            'url'=>url('sensor/item/'.$item->id)
+          ];
+        } catch (\Exception $e) {
+          return [
+            'status'=>false,
+            'errors'=>$e->getMessage()
+          ];
+        }
+    }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @return Response
-   */
-  public function store()
-  {
-    
-  }
+    function main($action=null,$id=null){
+      // Save & Update action
+      if(\Request::isMethod('post')){
+        return $this->record($action,$id);
+      }
+      $title = __('Add Sensor');
+      $layout = 'sensor.item';
+      $item = null;
+      if(!empty($id) || !empty(\Request::has('id'))){
+        $this->title = __('Sensor Information');
+        if(empty($id)){
+          $id = \Request::get('id');
+        }
+        $item = Sensor::find($id);
+        if(!empty($item->access) && $item->access == 'forbidden' ){
+          return abort(403);
+        }
+      }
+      $tabs = [
+        'sensor'=>__('Sensor'),
+        'readings'=>__('Readings')
+      ];
+      return view($layout)
+        ->withTitle($title)
+        ->withTabs($tabs)
+        ->withItem($item)
+      ;
+    }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function show($id)
-  {
-    
-  }
+    public function index()
+    {
+      $table = [
+        'title'=>__('Title'),
+        'created_at'=>__('Created')
+      ];
+      $items = $this->user->sensors()->orderBy('id');
+      if(\Request::has('search')){
+        $search = \Request::get('search');
+        $items = $this->search($items,$search,'title');
+      }
+      $items = $items->paginate(15);
+      return view('sensor.index')
+        ->withTitle(__('Sensors'))
+        ->withTable($table)
+        ->withItems($items)
+      ;
+    }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function edit($id)
-  {
-    
-  }
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function update($id)
-  {
-    
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function destroy($id)
-  {
-    
-  }
-  
 }
 
 ?>

@@ -1,83 +1,39 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use \App\Sensor;
+
 class ApiController extends Controller {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
-  public function index()
+  public function update(Request $request)
   {
-    
+    $return = [
+      'status'=>false
+    ];
+    if($request->has('api_key')){
+      $sensor = Sensor::where('api_key',$request->get('api_key'));
+      if($sensor->exists()){
+        $sensor = $sensor->first();
+        $return = [
+          'status'=>true,
+        ];
+      } else {
+        $return = [
+          'status'=>false,
+          'message'=>'Invalid API KEY'
+        ];
+      }
+    } else {
+      $return = [
+        'status'=>false,
+        'message'=>'Missing API KEY'
+      ];
+    }
+    return $return;
   }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return Response
-   */
-  public function create()
-  {
-    
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @return Response
-   */
-  public function store()
-  {
-    
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function show($id)
-  {
-    
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function edit($id)
-  {
-    
-  }
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function update($id)
-  {
-    
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function destroy($id)
-  {
-    
-  }
-  
 }
 
 ?>

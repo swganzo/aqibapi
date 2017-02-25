@@ -18,19 +18,19 @@ class GlobalComposer {
         $navigation = [
           [
             'url'=>'sensors',
-            'title'=>'Sensors',
+            'title'=>__('Sensors'),
             'icon'=>'thermometer',
             'children'=>[
               [
                 'url'=>'sensor/create',
-                'title'=>'Create Sensor',
+                'title'=>__('Create Sensor'),
                 'icon'=>'plus'
               ]
             ]
           ],
           [
             'url'=>'readings',
-            'title'=>'Readings',
+            'title'=>__('Readings'),
             'icon'=>'bar-chart'
           ],
         ];
@@ -38,22 +38,21 @@ class GlobalComposer {
         $navigation = null;
       }
       $styles = [
-        'app.css',
-        'bootstrap-tagsinput.css',
+        'app.css'
       ];
       $scripts = [
         'footer'=>[
-          'app.js',
-          'bootstrap-tagsinput.min.js',
-          'typeahead.bundle.js'
+          'app.js'
         ],
         'header'=>[
-          'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js',
-          'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js',
-          'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js',
+          '//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js',
+          '//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js',
+          '//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js',
         ]
       ];
-      $view->with('title', config('app.name', 'Laravel'));
+      if(empty($view->title)){
+        $view->with('title', config('app.name', 'AQIB API'));
+      }
       $view->with('navigation', $navigation);
       $view->with('styles', $styles);
       $view->with('scripts', $scripts);
@@ -61,7 +60,5 @@ class GlobalComposer {
         $view->with('user', Auth::user());
       }
     }
-
-
 }
 // https://laracasts.com/discuss/channels/general-discussion/l5-service-provider-for-sharing-view-variables
