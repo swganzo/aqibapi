@@ -10,8 +10,8 @@ class CreateLocationsTable extends Migration {
 		Schema::create('locations', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->integer('user_id')->unsigned();
-			$table->integer('sensor_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->integer('sensor_id')->unsigned()->nullable();
 			$table->string('lat');
 			$table->string('lon');
 			$table->string('ip')->nullable();

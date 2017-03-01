@@ -36,12 +36,14 @@
           $modaldata = json_encode($modaldata);
           // url('/servers/'.$server->id.'/edit')
         @endphp
-        <div class="small">
-          <div class="btn-group">
-            <a href="{{$item->url}}" class="btn-xs btn-primary btn" title="View"><i class="fa fa-eye"></i></a>
-            <a href="#" data-action="modal" data-modalaction="remove-{{$item->getTable()}}" data-modaldata="{{$modaldata}}" data-modalbody="modules.confirm" data-modaltitle="Remove Item" class="btn-xs btn-danger btn"><i class="fa fa-remove"></i></a>
+        @if (!empty($module))
+          <div class="small">
+            <div class="btn-group">
+              <a href="{{$item->url}}" class="btn-xs btn-primary btn" title="View"><i class="fa fa-eye"></i></a>
+              <a href="#" data-action="modal" data-modalaction="remove-{{$item->getTable()}}" data-modaldata="{{$modaldata}}" data-modalbody="modules.confirm" data-modaltitle="Remove Item" class="btn-xs btn-danger btn"><i class="fa fa-remove"></i></a>
+            </div>
           </div>
-        </div>
+        @endif
       @endif
 
     </td>
