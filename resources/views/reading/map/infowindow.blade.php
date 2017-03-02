@@ -9,4 +9,7 @@
       @endif
     @endforeach
   </ul>
+  <div class="">
+    {{__('Last Updated:')}} {{$sensor->lastreading->created_at->format('Y-m-d H:i:s')}}
+  </div>
 </div>
