@@ -9,6 +9,25 @@ use \App\Sensor;
 
 class SensorController extends Controller {
 
+  public function mapAll(Request $request)
+  {
+    $return = ['status'=>true];
+    $sensors = Sensor::all();
+    
+    foreach ($sensors as $sensor) {
+      if(!empty($sensor->last_location)){
+        $return['sensorlist'][$sensor->id] = [
+          'lat'=>$sensor->last_location->lat,
+          'lon'=>$sensor->last_location->lon,
+          'title'=>$sensor->title,
+          'pm25'=>view('reading.map.pm25')->withSensor($sensor)->render(),
+          'infowindow'=>view('reading.map.infowindow')->withSensor($sensor)->render()
+        ];
+      }
+    }
+    return $return;
+  }
+
   public function record($action=null,$id=null)
     {
         // If Updating

@@ -264,6 +264,7 @@ jQuery(document).ready(function($){
         window.location.hash = e.target.hash;
       })
     };
+
     var buildChart = function(){
       if($('#myChart').length){
         var ctx = document.getElementById("myChart");
@@ -305,6 +306,61 @@ jQuery(document).ready(function($){
         });
       }
     };
+    var initHomeMap = function(){
+      if($('#homeMap').length){
+        var map = new google.maps.Map(document.getElementById('homeMap'), {
+          zoom: 13,
+          center: {
+            lat: 47.9150179,
+            lng: 106.9176399
+          }
+        });
+        var bounds = new google.maps.LatLngBounds();
+        var markers = [];
+        var infowindows = [];
+        var position = '';
+        formData = '_token='+window.Laravel.csrfToken;
+        b = $('#homeMap');
+        ajaxCallback(formData, '/map/all', function(d) {
+          console.log(d);
+          if (d.status === false) {
+          } else {
+            $.each(d.sensorlist, function (i, v) {
+              //$('#locationlist').append(v.data);
+              //google maps
+              position = new google.maps.LatLng(v.lat,v.lon);
+              infowindows[i] = new google.maps.InfoWindow({
+                content: v.infowindow
+              });
+              markers[i] = new RichMarker({
+                position: position,
+                map: map,
+                draggable: false,
+                content: v.pm25
+                });
+              markers[i].addListener('click', function() {
+                infowindows[i].open(map, markers[i]);
+              });
+              // markers[i] = new MarkerWithLabel({
+              //   position: position,
+              //   map: map,
+              //   labelContent: v.pm25,
+              //   labelClass: 'location-map-pin',
+              //   icon: '',
+              //   labelInBackground: false,
+              //   // labelAnchor: new google.maps.Point(12, 32),
+              // });
+              // markers[i].addListener('click', function () {
+              //   makeActive(i, markers, infowindows);
+              // });
+              bounds.extend(position);
+
+            });
+            // map.fitBounds(bounds);
+          }
+        });
+      }
+    };
     var init = function(){
       initPrivate();
       initButton();
@@ -315,6 +371,7 @@ jQuery(document).ready(function($){
       initPlatformTypeField();
       initOpentab();
       buildChart();
+      initHomeMap();
       console.log('Web JS initiated');
     };
     return {

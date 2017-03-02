@@ -21,6 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+Route::group(['prefix' => 'map'], function () {
+  Route::any('all', 'SensorController@mapAll');
+});
+
 Route::group(['middleware' => 'auth'], function(){
   // Sensor routes
   Route::get('sensors','SensorController@index');
