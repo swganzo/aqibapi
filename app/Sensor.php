@@ -32,6 +32,35 @@ class Sensor extends Model {
     ];
   }
 
+  public function todayAverage()
+  {
+    $rawString = '';
+    $rawStringArray = [];
+    foreach ($this->header as $k => $v) {
+      $rawStringArray[] = 'AVG('.$k.')';
+    }
+    $rawString = implode(', ',$rawStringArray);
+    $readings = $this->readings()->select(\DB::raw($rawString))->whereRaw('DATE(created_at) = CURDATE()')->groupBy(\DB::raw('HOUR( `created_at` )'))->get();
+    $return = [];
+    foreach ($readings as $key => $reading) {
+      dd($reading);
+      $return['day'][$reading->created_at->format('d')];
+    }
+    return $return;
+    // SET sql_mode= ''; SELECT AVG( pm25 ) , created_at FROM readings  where `sensor_id` = 1 and  DATE(created_at) = CURDATE() GROUP BY HOUR( created_at ) order by id;
+  }
+  public function weeklyAverage()
+  {
+    $rawString = '';
+    $rawStringArray = [];
+    foreach ($this->header as $k => $v) {
+      $rawStringArray[] = 'AVG('.$k.')';
+    }
+    $rawString = implode(', ',$rawStringArray);
+    return $this->readings()->select(\DB::raw($rawString))->whereRaw('DATE(created_at) = CURWEEK()')->groupBy(\DB::raw('HOUR( `created_at` )'))->get();
+    // SET sql_mode= ''; SELECT AVG( pm25 ) , created_at FROM readings  where `sensor_id` = 1 and  DATE(created_at) = CURDATE() GROUP BY HOUR( created_at ) order by id;
+  }
+
   public function readings($value='')
   {
     return $this->hasMany('\App\Reading');

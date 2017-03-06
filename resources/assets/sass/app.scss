@@ -4,10 +4,70 @@
 
 // Variables
 @import "variables";
-
+$good: #009966;
+$moderate: #ffde33;
+$group_unhealty: #ff9933;
+$unhealty: #cc0033;
+$very_unhealty: #660099;
+$hazardous: #7e0023;
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 .homeMap{
   width: 100%;
   height: 600px;
+}
+.loading {
+  position: relative;
+  cursor: wait;
+  z-index: 0;
+  &:before {
+    content: " ";
+    position: absolute;
+    background: url('../images/loading.gif') no-repeat center center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+}
+.aqi{
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  line-height: 30px;
+  font-size: 14px;
+  transition: all 0.3s;
+  &:hover, &:active{
+    text-decoration: none;
+    color: #fff;
+    line-height: 32px;
+    width: 32px;
+    height: 32px;
+    left: -16px;
+    top: -16px;
+    transition: all 0.2s;
+  }
+  &.good{
+    background-color: $good;
+  }
+  &.moderate{
+    background-color: $moderate;
+  }
+  &.group_unhealty{
+    background-color: $group_unhealty
+  }
+  &.unhealty{
+    background-color: $unhealty
+  }
+  &.hazardous{
+    background-color: $hazardous
+  }
 }

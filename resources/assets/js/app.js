@@ -10,6 +10,9 @@ jQuery(document).ready(function($){
     f,
     formData,
     action,
+    markers,
+    infowindows,
+    map,
     url;
     var bLoading = function() {
       if(b.hasClass('loading')){
@@ -306,9 +309,28 @@ jQuery(document).ready(function($){
         });
       }
     };
+    var markerAction = function(i){
+      formData = '_token='+window.Laravel.csrfToken+'&id='+i;
+      b = $('#sensor-btn-'+i);
+      ajaxCallback(formData, '/map/single', function(d) {
+        if (d.status === false) {
+        } else {
+          b.replaceWith(d.pm25);
+          // b.unwrap().html(d.pm25);
+          infowindows[i] = new google.maps.InfoWindow({
+            content: d.infowindow
+          });
+          // infowindows[i].setContentHTML(d.infowindow);
+          infowindows[i].open(map, markers[i]);
+        }
+      });
+
+    };
     var initHomeMap = function(){
       if($('#homeMap').length){
-        var map = new google.maps.Map(document.getElementById('homeMap'), {
+        markers = [];
+        infowindows = [];
+        map = new google.maps.Map(document.getElementById('homeMap'), {
           zoom: 13,
           center: {
             lat: 47.9150179,
@@ -316,18 +338,13 @@ jQuery(document).ready(function($){
           }
         });
         var bounds = new google.maps.LatLngBounds();
-        var markers = [];
-        var infowindows = [];
         var position = '';
         formData = '_token='+window.Laravel.csrfToken;
         b = $('#homeMap');
         ajaxCallback(formData, '/map/all', function(d) {
-          console.log(d);
           if (d.status === false) {
           } else {
             $.each(d.sensorlist, function (i, v) {
-              //$('#locationlist').append(v.data);
-              //google maps
               position = new google.maps.LatLng(v.lat,v.lon);
               infowindows[i] = new google.maps.InfoWindow({
                 content: v.infowindow
@@ -339,7 +356,8 @@ jQuery(document).ready(function($){
                 content: v.pm25
                 });
               markers[i].addListener('click', function() {
-                infowindows[i].open(map, markers[i]);
+                console.log('asdasdas');
+                markerAction(i);
               });
               // markers[i] = new MarkerWithLabel({
               //   position: position,
@@ -372,7 +390,6 @@ jQuery(document).ready(function($){
       initOpentab();
       buildChart();
       initHomeMap();
-      console.log('Web JS initiated');
     };
     return {
       init: init

@@ -48,6 +48,7 @@ class GlobalComposer {
         'header'=>[
           '//maps.googleapis.com/maps/api/js?key='.env('GMAP_API'),
           '//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js',
+          '//d3js.org/d3.v3.js',
           '//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js',
           '//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js',
         ]

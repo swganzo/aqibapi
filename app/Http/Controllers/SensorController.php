@@ -13,13 +13,29 @@ class SensorController extends Controller {
   {
     $return = ['status'=>true];
     $sensors = Sensor::all();
-    
+
     foreach ($sensors as $sensor) {
       if(!empty($sensor->last_location)){
         $return['sensorlist'][$sensor->id] = [
           'lat'=>$sensor->last_location->lat,
           'lon'=>$sensor->last_location->lon,
           'title'=>$sensor->title,
+          'pm25'=>view('reading.map.pm25')->withSensor($sensor)->render(),
+          'infowindow'=>view('reading.map.infowindow')->withSensor($sensor)->render()
+        ];
+      }
+    }
+    return $return;
+  }
+  public function mapSingle(Request $request)
+  {
+    $return = ['status'=>true];
+    if($request->has('id')){
+      $sensor = Sensor::find($request->id);
+      // dd($sensor->todayAverage());
+      if($sensor){
+        $return = [
+          'status'=>true,
           'pm25'=>view('reading.map.pm25')->withSensor($sensor)->render(),
           'infowindow'=>view('reading.map.infowindow')->withSensor($sensor)->render()
         ];

@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+      $sensor = \App\Sensor::find(1);
+      dump($sensor->todayAverage());
+
         return view('home');
     }
 }

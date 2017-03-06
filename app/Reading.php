@@ -5,8 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Reading extends Model {
+  public function hourlyAverage()
+  {
+    # code...
+  }
 
-	protected $table = 'readings';
-	public $timestamps = true;
+  
 
 }

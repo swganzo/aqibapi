@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index');
 
 Route::group(['prefix' => 'map'], function () {
   Route::any('all', 'SensorController@mapAll');
+  Route::any('single', 'SensorController@mapSingle');
 });
 
 Route::group(['middleware' => 'auth'], function(){
