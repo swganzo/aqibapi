@@ -312,6 +312,7 @@ jQuery(document).ready(function($){
     var markerAction = function(i){
       formData = '_token='+window.Laravel.csrfToken+'&id='+i;
       b = $('#sensor-btn-'+i);
+      infowindows[i].close();
       ajaxCallback(formData, '/map/single', function(d) {
         if (d.status === false) {
         } else {
