@@ -25275,7 +25275,6 @@ jQuery(document).ready(function ($) {
                 content: v.pm25
               });
               markers[i].addListener('click', function () {
-                console.log('asdasdas');
                 markerAction(i);
               });
               // markers[i] = new MarkerWithLabel({

@@ -32,6 +32,7 @@ $hazardous: #7e0023;
   }
 }
 .aqi{
+  background-color: #000;
   border-radius: 50%;
   cursor: pointer;
   text-align: center;
@@ -66,6 +67,9 @@ $hazardous: #7e0023;
   }
   &.unhealty{
     background-color: $unhealty
+  }
+  &.very_unhealty{
+    background-color: $very_unhealty
   }
   &.hazardous{
     background-color: $hazardous

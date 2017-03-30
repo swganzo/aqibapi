@@ -19,16 +19,23 @@ class Sensor extends Model {
   public function getHeaderAttribute()
   {
     return [
-      'pm1'=>'PM 1',
-      'pm25'=>'PM 2.5',
-      'pm10'=>'PM 10',
-      'so2'=>'SO2',
-      'o3'=>'O3',
-      'no2'=>'NO2',
-      'co'=>'CO',
-      'nh3'=>'NH3',
-      'temperature'=>'Temperature',
-      'humidity'=>'Humidity',
+    'pm1'=>'PM 1',
+    'pm25'=>'PM 2.5',
+    'pm10'=>'PM 10',
+    'so2'=>'SO2',
+    'o3'=>'O3',
+    'no2'=>'NO2',
+    'co'=>'CO',
+    'nh3'=>'NH3',
+    'temperature'=>'Temperature',
+    'humidity'=>'Humidity',
+    ];
+  }
+
+  public function getGasAttribute(){
+    return [
+    'gas'=>'Gas',
+    'mq135'=>'MQ135',
     ];
   }
 

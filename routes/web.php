@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('api/update', 'ApiController@update');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
